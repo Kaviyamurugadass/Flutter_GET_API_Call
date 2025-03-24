@@ -86,7 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: fetchData,
-              child: const Text('Fetch Data'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Change button color
+                foregroundColor: Colors.white, // Change text color
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12), // Button size
+                shape: RoundedRectangleBorder( // Rounded corners
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text('Fetch a Data'),
             ),
           ],
         ),
