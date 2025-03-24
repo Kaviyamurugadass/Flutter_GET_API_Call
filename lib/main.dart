@@ -57,8 +57,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _num = 1;
-  String _data = "Click button to fetch data";
+  String _data = "Click button for GET API data";
+  String _postdata = "Click the bellow button for POST API data";
 
+  // get api
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/todos/$_num'));
 
@@ -74,7 +76,29 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  @override
+  // post api
+  Future<void> sendData() async {
+    final response = await http.post(
+      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "title": "Flutter API Example",
+        "body": "This is a test post.",
+        "userId": 1,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      setState(() {
+        _postdata = "Data sent successfully: ${response.body}";
+      });
+    } else {
+      setState(() {
+        _postdata = "Failed to send data";
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('API Call Example')),
@@ -94,7 +118,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text('Fetch a Data'),
+              child: const Text('GET Data'),
+            ),
+
+
+            Text(_postdata, textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: sendData,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red, // Change button color
+                foregroundColor: Colors.white, // Change text color
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12), // Button size
+                shape: RoundedRectangleBorder( // Rounded corners
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text('POST Data'),
             ),
           ],
         ),
