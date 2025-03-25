@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'api_list_page.dart';
 import 'dart:convert'; // For converting JSON
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'API Call',
+      title: 'API Call Nav',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -99,9 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('API Call Example')),
+      appBar: AppBar(title: const Text('Home Page')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -121,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('GET Data'),
             ),
 
+            const SizedBox(height: 20),
 
             Text(_postdata, textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
             const SizedBox(height: 20),
@@ -136,6 +139,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: const Text('POST Data'),
             ),
+           const SizedBox(height: 20), // Add margin space
+            ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ApiListPage()), // Navigate to ListPage
+            );
+          },
+          child: const Text('Go to API List Page'),
+        ),
           ],
         ),
       ),
